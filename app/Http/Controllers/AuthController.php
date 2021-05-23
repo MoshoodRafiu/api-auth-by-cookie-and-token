@@ -47,7 +47,7 @@ class AuthController extends Controller
     {
         $validator = Validator::make(\request()->all(), [
             'email' => ['required', 'email'],
-            'password' => ['required', 'confirmed']
+            'password' => ['required']
         ]);
         if ($validator->fails()){
             return Response::json(['errors' => $validator->messages()], 422);
@@ -59,7 +59,7 @@ class AuthController extends Controller
             $user = User::query()->where('email', request()->get('email'))->first();
             return $this->returnDataWithTokenOrUser($type, $user);
         }
-        return Response::json(['error' => 'Something went wrong'], 400);
+        return Response::json(['message' => 'Invalid login credentials'], 400);
     }
 
     public function logout(Request $request, $type = 'token'): \Illuminate\Http\JsonResponse
