@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\EmailVerificationJob;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -34,7 +35,7 @@ class AuthController extends Controller
             'email_verification_token' => Hash::make($token),
             'email_verification_token_expiry' => now()->addMinutes(30)
         ]);
-        NotificationController::sendEmailVerificationLink($user, $token);
+        EmailVerificationJob::dispatch($user, $token);
         $token = $user->createToken(request()->get('token_name') ?? 'app')->plainTextToken;
         return Response::json(['data' => ['user' => $user, 'token' => $token]]);
     }
