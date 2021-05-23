@@ -18,7 +18,7 @@ class AuthTest extends TestCase
     {
         $response = $this->json('POST', '/auth/register', [
             'name' => 'Test',
-            'email' => 'test@devrom.com',
+            'email' => 'c89b34aea3-e09dee@inbox.mailtrap.io',
             'password' => 'Password123!',
             'password_confirmation' => 'Password123!'
         ]);
